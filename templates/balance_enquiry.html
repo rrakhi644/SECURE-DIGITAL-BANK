@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}Balance Enquiry{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex align-items-center">
+        <i class="fas fa-search-dollar me-2"></i> Balance Enquiry
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h5 class="mb-4">Check your account balance securely</h5>
+                <form method="POST" id="balanceForm">
+                    <div class="mb-4">
+                        <label for="account_id" class="form-label">Account ID</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="number" class="form-control" id="account_id" name="account_id" required>
+                        </div>
+                        <div class="form-text">Enter your 7-digit account number</div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="pin" class="form-label">PIN</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="form-control" id="pin" name="pin" maxlength="4" required>
+                        </div>
+                        <div class="form-text">Enter your 4-digit PIN</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search me-2"></i> Check Balance
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="text-center p-4">
+                    <i class="fas fa-money-bill-wave fa-4x text-primary mb-4"></i>
+                    <p class="lead">View your current balance to better manage your finances.</p>
+                    <div class="d-none" id="balanceDisplay">
+                        <div class="card mt-4 border-success">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">Your Current Balance</h5>
+                                <p class="balance-display">₹<span id="balanceAmount">0</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if there's a flash message containing balance info
+    const flashMessages = document.querySelectorAll('.alert-success');
+    flashMessages.forEach(message => {
+        if (message.textContent.includes('Current Balance:')) {
+            // Extract the balance amount
+            const balanceText = message.textContent;
+            const balanceMatch = balanceText.match(/Current Balance: ([\d.]+)/);
+            
+            if (balanceMatch && balanceMatch[1]) {
+                const balanceAmount = balanceMatch[1];
+                
+                // Display the balance in the dedicated area
+                const balanceDisplay = document.getElementById('balanceDisplay');
+                const balanceAmountElement = document.getElementById('balanceAmount');
+                
+                if (balanceDisplay && balanceAmountElement) {
+                    balanceDisplay.classList.remove('d-none');
+                    balanceAmountElement.textContent = balanceAmount;
+                    
+                    // Add animation
+                    const numericBalance = parseFloat(balanceAmount);
+                    animateBalance(0, numericBalance, 1000, balanceAmountElement);
+                }
+            }
+        }
+    });
+    
+    // Simple input validation
+    const form = document.getElementById('balanceForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            const accountInput = document.getElementById('account_id');
+            const pinInput = document.getElementById('pin');
+            
+            if (accountInput.value.length !== 7) {
+                e.preventDefault();
+                alert('Account ID must be 7 digits');
+                return false;
+            }
+            
+            if (pinInput.value.length !== 4) {
+                e.preventDefault();
+                alert('PIN must be 4 digits');
+                return false;
+            }
+        });
+    }
+});
+
+// Animated counter for balance display
+function animateBalance(start, end, duration, element) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const currentBalance = Math.floor(progress * (end - start) + start);
+        element.textContent = currentBalance.toLocaleString();
+        
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        } else {
+            element.textContent = end.toLocaleString();
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+</script>
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header d-flex align-items-center">
+        <i class="fas fa-home me-2"></i> Welcome to SecureBank
+    </div>
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h2 class="display-6 fw-bold mb-3">Your Digital Banking Solution</h2>
+                <p class="lead">
+                    Secure, reliable, and easy to use. Manage your finances with confidence.
+                </p>
+                <div class="mt-4">
+                    <a href="{{ url_for('create_account') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-user-plus me-2"></i> Get Started
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/6.0.0/simpleicons.svg" alt="Banking" style="max-width: 100%; height: 200px; opacity: 0.8;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="feature-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h5 class="card-title">Account Management</h5>
+                <p class="card-text">Create a new account or check your current balance securely.</p>
+                <div class="mt-3">
+                    <a href="{{ url_for('create_account') }}" class="btn btn-primary">
+                        <i class="fas fa-user-plus me-1"></i> New Account
+                    </a>
+                    <a href="{{ url_for('balance_enquiry') }}" class="btn btn-outline-primary mt-2">
+                        <i class="fas fa-search-dollar me-1"></i> Check Balance
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="feature-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <h5 class="card-title">Transaction Management</h5>
+                <p class="card-text">Deposit or withdraw money and keep track of your financial activity.</p>
+                <div class="mt-3">
+                    <a href="{{ url_for('credit') }}" class="btn btn-primary">
+                        <i class="fas fa-plus-circle me-1"></i> Deposit
+                    </a>
+                    <a href="{{ url_for('debit') }}" class="btn btn-outline-primary mt-2">
+                        <i class="fas fa-minus-circle me-1"></i> Withdraw
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h5 class="card-title">Security & History</h5>
+                <p class="card-text">Manage your security settings and review your transaction history.</p>
+                <div class="mt-3">
+                    <a href="{{ url_for('change_pin') }}" class="btn btn-primary">
+                        <i class="fas fa-key me-1"></i> Change PIN
+                    </a>
+                    <a href="{{ url_for('view_transactions') }}" class="btn btn-outline-primary mt-2">
+                        <i class="fas fa-history me-1"></i> Transactions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header d-flex align-items-center">
+        <i class="fas fa-shield-alt me-2"></i> Security Tips
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-3"></i>
+                        Regularly change your PIN for enhanced security
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-3"></i>
+                        Never share your account details or PIN with anyone
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-3"></i>
+                        Monitor your transaction history regularly
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-3"></i>
+                        Ensure you log out after completing transactions
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Animation for feature cards
+    document.addEventListener('DOMContentLoaded', function() {
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            }, 100);
+        });
+    });
+</script>
+{% endblock %}
