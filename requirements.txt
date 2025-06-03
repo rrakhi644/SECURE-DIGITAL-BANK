@@ -98,7 +98,6 @@ stack-data[pygments]==0.6.2
 terminado==0.17.1
 tinycss2==1.2.1
 tornado==6.3.2
-traitlets==5.9.0
 typing_extensions==4.7.1
 urllib3==2.0.4
 wcwidth==0.2.6
