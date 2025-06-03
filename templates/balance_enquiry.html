@@ -115,6 +115,7 @@ function animateBalance(start, end, duration, element) {
         
         if (progress < 1) {
             window.requestAnimationFrame(step);
+            
         } else {
             element.textContent = end.toLocaleString();
         }
