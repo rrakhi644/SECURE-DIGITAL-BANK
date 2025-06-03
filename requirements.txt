@@ -1,7 +1,7 @@
 Flask==2.3.2
 click>=8.0
 itsdangerous>=2.0
-
+psycopg2-binary==2.9.6
 absl-py==2.1.0
 annotated-types==0.7.0
 anyio==4.4.0
